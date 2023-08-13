@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            canvas{
+                width: 270vh;
+                height: 270vh;
+            }
+            #ck{
+                width: 300vh;
+                height: 90vh;
+                overflow: scroll;
+            }
+        </style>
+        <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+        <title>紧急疏散</title>
+    </head>
+    <body>
+        <div id="ck">
+            <canvas width="3000" height="3000"></canvas>
+        </div>
+        <button onclick="sco()">For Once</button>
+        <button onclick="scoI = setInterval('sco()',100);">Start</button>
+        <button onclick="clearInterval(scoI);">Stop</button>
+        <button onclick="watchMode = 0;disPlayChooser();">On</button>
+        <input type="number" id="OnNumber" value="4">
+        <button onclick="watchMode = 1;disPlayChooser();">Front</button>
+        <button onclick="watchMode = 2;disPlayChooser();">Right</button>
+        <button onclick="watchMode = 3;disPlayChooser();">Behind</button>
+        <button onclick="watchMode = 4;disPlayChooser();">Left</button>
+        <span id="timeDis"></span>
+    </body>
+    <script src="js/main.js"></script>
+    <script src="js/Hole.js"></script>
+    <script src="js/HallWay.js"></script>
+    <script src="js/ClassRoom.js"></script>
+    <script>
+        /**
+        @version 0.5
+        @author XSYangtuo
+        @License none
+        */
+        var scoI;
+        // var hallwT = HallWay.newHallWay(6,70,1,0,1,testNewClassRoom(4,50),8,0);
+        // var holewT = Hole.newHole(8,100,2,0);
+        function scoHall(){
+            canvas.fillStyle = "white";
+            canvas.fillRect(0,0,3000,3000);
+            HallWay.hallWayRun(hallwT);
+            HallWay.displayHallWay(hallwT,20,20,70,true);
+        }
+        function scoHole(){
+            canvas.fillStyle = "white";
+            canvas.fillRect(0,0,3000,3000);
+            if(Math.random()>0.6)Hole.joinPeo(holewT,{
+            color:"#"+Math.floor(Math.random()*900000)
+        })
+            Hole.runHole(holewT);
+            Hole.displayHole(holewT,20,20,100)
+        }
+        var watchMode = 0;
+        function disPlayChooser(){
+            switch(watchMode){
+                case 0:disPlayOn(parseInt($("#OnNumber").val()));break;
+                case 1:disPlayFront();break;
+                case 2:disPlayRight();break;
+                case 3:disPlayBehind();break;
+                case 4:disPlayLeft();break;
+            }
+        }
+        function sco(){
+            // scoHall();
+            // scoHole();
+            disPlayChooser();
+            run();
+            $("#timeDis").html("time:"+runTimes);
+            $("title").html("紧急疏散已用时"+runTimes);
+        }
+        structure.init();
+        // for(let i =0;i<60;i++){
+        //     summon();
+        // }
+        //HallWay.displayHallWay(hallwT,20,20,90,false);
+        
+        //setInterval("summon()",100)
+
+    </script>
+</html>
